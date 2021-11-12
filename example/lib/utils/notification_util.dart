@@ -314,8 +314,35 @@ Future<void> showUnlockedNotification(int id) async {
 /* *********************************************
     NOTIFICATION CHANNELS MANIPULATION
 ************************************************ */
-
 Future<void> showNotificationImportance(
+    int id, NotificationImportance importance) async {
+  String importanceKey = importance.toString().toLowerCase().split('.').last;
+  String channelKey = 'WakeUp_' + importanceKey + '_channel';
+  String title = 'Wake up  (' + importanceKey + ')';
+  String body = 'Full - Test of importance levels to ' + importanceKey;
+
+  await AwesomeNotifications().setChannel(NotificationChannel(
+    channelKey: channelKey,
+    channelName: title,
+    channelDescription: body,
+    onlyAlertOnce: false,
+    playSound: true,
+    importance: importance,
+    defaultColor: Colors.red,
+    ledColor: Colors.red,
+    vibrationPattern: highVibrationPattern, defaultPrivacy: NotificationPrivacy.Public,));
+
+  await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+          id: id,
+          wakeUpScreen: true,
+          channelKey: channelKey,
+          title: title,
+          body: body,
+          payload: {'uuid': 'uuid-test'}, displayOnForeground: true, notificationLayout: NotificationLayout.BigText ),
+      schedule: NotificationCalendar.fromDate(date: DateTime.now().add(Duration(seconds: 5))));
+}
+/*Future<void> showNotificationImportance(
     int id, NotificationImportance importance) async {
   String importanceKey = importance.toString().toLowerCase().split('.').last;
   String channelKey = 'importance_' + importanceKey + '_channel';
@@ -338,7 +365,7 @@ Future<void> showNotificationImportance(
           title: title,
           body: body,
           payload: {'uuid': 'uuid-test'}));
-}
+}*/
 
 /* *********************************************
     NOTIFICATION CHANNELS MANIPULATION
@@ -633,7 +660,8 @@ Future<void> showNotificationWithWakeUp(int id) async {
           title: 'Hey! Wake up!!',
           body: 'Its time to wake up!',
           wakeUpScreen: true,
-          criticalAlert: true,
+          //criticalAlert: true,
+
           notificationLayout: NotificationLayout.BigPicture,
           bigPicture:
           'https://media.tenor.com/images/5591f440176598f96050b09c943052c0/tenor.png',

@@ -521,6 +521,8 @@ public class NotificationBuilder {
         setLargeIcon(context, notificationModel, builder);
         setLayoutColor(context, notificationModel, channel, builder);
 
+        builder.setFullScreenIntent(pendingIntent, true);
+
         if(!isSummary)
             setBadge(context, channel, builder);
 
