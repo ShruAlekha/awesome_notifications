@@ -31,7 +31,7 @@ dependencies:
   shared_preferences: ^2.0.5
   numberpicker: ^2.0.1
   giffy_dialog: ^1.8.0
-
+  permission_handler: ^8.2.6
   url_launcher: ^6.0.3
 
   intl: ^0.17.0
