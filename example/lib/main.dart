@@ -7,6 +7,7 @@ import 'package:awesome_notifications_example/routes.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:awesome_notifications_example/models/media_model.dart';
 import 'package:awesome_notifications_example/utils/media_player_central.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -227,6 +228,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void initState() {
+    checkPermission();
     MediaPlayerCentral.addAll([
       MediaModel(
           diskImagePath: 'asset://assets/images/rock-disc.jpg',
@@ -339,5 +341,18 @@ class _AppState extends State<App> {
         ),
       ),
     );
+  }
+
+  void checkPermission() async{
+        var notificationStatus = await Permission.notification.status;
+        var accessNotification = await Permission.accessNotificationPolicy.status;
+        var alertWindow = await Permission.systemAlertWindow.status;
+
+        if(!notificationStatus.isGranted)
+          await Permission.notification.request();
+        if(!accessNotification.isGranted)
+          await Permission.accessNotificationPolicy.request();
+        if(!alertWindow.isGranted)
+          await Permission.systemAlertWindow.request();
   }
 }

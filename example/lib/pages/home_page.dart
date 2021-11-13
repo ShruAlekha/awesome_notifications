@@ -183,6 +183,7 @@ class _HomePageState extends State<HomePage> {
           fullIntentNotificationsAllowed = permissionsAllowed.contains(NotificationPermission.FullScreenIntent);
           preciseAlarmsAllowed = permissionsAllowed.contains(NotificationPermission.PreciseAlarms);
         }));
+
   }
 
   void processDefaultActionReceived(ReceivedAction receivedNotification) {
